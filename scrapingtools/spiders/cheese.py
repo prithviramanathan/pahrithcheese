@@ -40,11 +40,17 @@ class CheeseSpider(scrapy.Spider):
 		cheese['name'] = a[0].strip()
 		break
 	    description = response.xpath('//meta').extract()
+            got_description = False
+            got_image = False
             for item in description:
-                if 'description' in item:
+                if 'description' in item and not got_description:
                     a = item.split('content=')
                     cheese['description'] = a[1].split('\"')[1].strip()
-                    break
+                    got_description = True
+                if 'twitter:image' in item and not got_image:
+                    a = item.split('content=')
+                    cheese['image'] = a[1].split('\"')[1].strip()
+                    got_image = True
 	    other_info = response.xpath('//p').extract()
 	    for item in other_info:
 		text = cleanhtml(item)

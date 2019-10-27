@@ -18,6 +18,7 @@ class CheeseItem(scrapy.Item):
 	flavour = scrapy.Field()
 	texture = scrapy.Field()
 	aroma = scrapy.Field()
+        image = scrapy.Field()
 
 
 class PoliticianItem(scrapy.Item):
