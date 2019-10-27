@@ -6,6 +6,19 @@
 # https://doc.scrapy.org/en/latest/topics/items.html
 
 import scrapy
+class CheeseItem(scrapy.Item):
+	name = scrapy.Field()
+	description = scrapy.Field()
+	country_of_origin = scrapy.Field()
+	region = scrapy.Field()
+	type = scrapy.Field()
+	fat_content = scrapy.Field()
+	family = scrapy.Field()
+	colour = scrapy.Field()
+	flavour = scrapy.Field()
+	texture = scrapy.Field()
+	aroma = scrapy.Field()
+
 
 class PoliticianItem(scrapy.Item):
 	name = scrapy.Field()

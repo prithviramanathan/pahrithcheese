@@ -20,17 +20,24 @@ class CheeseSpider(scrapy.Spider):
 
 	def parse(self, response):
 		# print("response:", response.body)
+		cheese = CheeseItem()
 		title_info = response.xpath('//title').extract()
-                for item in title_info:
-                    print('title: ', cleanhtml(item))
+        for item in title_info:
+        	a = item.split(' ')
+			cheese['name'] = a[0]
+			break
 		description = response.xpath('//meta').extract()
-                for item in description:
-                    if 'description' in item:
-                        a = item.split('content=')
-                        print('desription:', a[1])
+        for item in description:
+            if 'description' in item:
+                a = item.split('content=')
+                cheese['description'] = a[1]
 		other_info = response.xpath('//p').extract()
 		for item in other_info:
-			print('other info: ', cleanhtml(item))
+			text = cleanhtml(item)
+			if 'Region' in text:
+				cheese['region'] = text.split(' ')[1]
+			if 'Family' in text:
+				cheese['family'] = text.split(' ')[1]
 		"""
 		name_path = response.url.split("/")[-1].split(".")[0]
 		pic_url = 'http://senate.ontheissues.org/pictures/' + name_path + '.jpg'
@@ -63,3 +70,4 @@ class CheeseSpider(scrapy.Spider):
 		politician['issues'] = issues
 		yield politician
 		"""
+		yield cheese
