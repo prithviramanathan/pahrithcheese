@@ -14,7 +14,7 @@ class CheeseSpider(scrapy.Spider):
 
 	def parse(self, response):
 		if response.url == 'http://cheese.com':
-			info = ['parmesan']
+			info = ['parmesan/']
 			# print(info)
 			# print(len(info))
 			base_url = 'http:cheese.com/'
@@ -22,9 +22,10 @@ class CheeseSpider(scrapy.Spider):
 				page = base_url + page
 				yield scrapy.Request(page, callback=self.parse)
 			return
-		print("response:", response.body)
-		"""
+		# print("response:", response.body)
 		pol_info = response.xpath('//font[@face="Verdana, Arial, Tahoma, Helvetica, Sans-Serif"]/b/text()').extract()
+		print(pol_info)
+		"""
 		name_path = response.url.split("/")[-1].split(".")[0]
 		pic_url = 'http://senate.ontheissues.org/pictures/' + name_path + '.jpg'
 
