@@ -1,13 +1,18 @@
 import scrapy
 
 from scrapingtools.items import *
+import re
+def cleanhtml(raw_html):
+  cleanr = re.compile('<.*?>')
+  cleantext = re.sub(cleanr, '', raw_html)
+  return cleantext
 
 class CheeseSpider(scrapy.Spider):
 	name = "scrapingtools"
 
 	def start_requests(self):
 		urls = [
-			'http://cheese.com/parmesan'
+			'http://cheese.com/parmesan',
 			'http://cheese.com/cheddar'
 		]
 		for url in urls:
@@ -19,7 +24,8 @@ class CheeseSpider(scrapy.Spider):
 		description = response.xpath('//meta').extract()
 		other_info = response.path('//p').extract()
 		print('title: ', pol_info)
-		print('description: ', description)
+		for item in description:
+			print('description: ', cleanhtml(item))
 		print('other info: ', other_info)
 		"""
 		name_path = response.url.split("/")[-1].split(".")[0]
