@@ -3,7 +3,7 @@ import scrapy
 from scrapingtools.items import *
 
 class CheeseSpider(scrapy.Spider):
-	name = "cheese"
+	name = "scrapingtools"
 
 	def start_requests(self):
 		urls = [
