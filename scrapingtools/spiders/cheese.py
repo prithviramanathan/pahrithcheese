@@ -24,7 +24,7 @@ class CheeseSpider(scrapy.Spider):
 	    title_info = response.xpath('//title').extract()
             for item in title_info:
                 item = cleanhtml(item)
-        	a = item.split(' ')
+        	a = item.split('-')
 		cheese['name'] = a[0]
 		break
 	    description = response.xpath('//meta').extract()
@@ -35,25 +35,26 @@ class CheeseSpider(scrapy.Spider):
                     break
 	    other_info = response.xpath('//p').extract()
 	    for item in other_info:
-			text = cleanhtml(item)
-			words = text.split(':')[1]
-			if 'Region' in text:
-                cheese['region'] = words
-			if 'Family' in text:
-		    	cheese['family'] = words
-			if 'Fat content' in text:
-				cheese['fat_content'] = words
-			if 'Colour' in text:
-				cheese['colour'] = words
-			if 'Flavour' in text:
-				cheese['flavour'] = words
-			if 'Aroma' in text:
-				cheese['aroma'] = words
-			if 'Texture' in text:
-				cheese['texture'] = words
-			if 'Country of origin' in text:
-				cheese['country_of_origin'] = words
-			if 'Type' in text:
-				cheese['type'] = words
-		yield cheese
-                return
+		text = cleanhtml(item)
+		words = text.split(':')
+		if 'Region:' in text:
+                    cheese['region'] = words[1]
+		if 'Family:' in text:
+		    cheese['family'] = words[1]
+		if 'Fat content:' in text:
+		    cheese['fat_content'] = words[1]
+		if 'Colour:' in text:
+		    cheese['colour'] = words[1]
+		if 'Flavour:' in text:
+                    print(words)
+		    cheese['flavour'] = words[1]
+		if 'Aroma:' in text:
+		    cheese['aroma'] = words[1]
+		if 'Texture:' in text:
+		    cheese['texture'] = words[1]
+		if 'Country of origin:' in text:
+		    cheese['country_of_origin'] = words[1]
+		if 'Type:' in text:
+		    cheese['type'] = words[1]
+	    yield cheese
+            return
