@@ -23,8 +23,8 @@ class CheeseSpider(scrapy.Spider):
 				yield scrapy.Request(page, callback=self.parse)
 			return
 		# print("response:", response.body)
-		pol_info = response.xpath('//font[@face="Verdana, Arial, Tahoma, Helvetica, Sans-Serif"]/b/text()').extract()
-		print(pol_info)
+		pol_info = response.xpath('//title').extract()
+		print('parsed: ', pol_info)
 		"""
 		name_path = response.url.split("/")[-1].split(".")[0]
 		pic_url = 'http://senate.ontheissues.org/pictures/' + name_path + '.jpg'
