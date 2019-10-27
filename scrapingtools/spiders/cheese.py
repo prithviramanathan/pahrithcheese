@@ -16,7 +16,7 @@ class CheeseSpider(scrapy.Spider):
 
 	def start_requests(self):
 		for letter in letter_array:
-			url = 'http://cheese.com/alphabetical/?i=' + letter + '#top'
+			url = 'http://cheese.com/alphabetical/?per_page=100&i=' + letter
 			yield scrapy.Request(url=url, callback=self.parse)
 
 
