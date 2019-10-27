@@ -7,24 +7,20 @@ class CheeseSpider(scrapy.Spider):
 
 	def start_requests(self):
 		urls = [
-			'http://cheese.com',
+			'http://cheese.com/parmesan'
+			'http://cheese.com/cheddar'
 		]
 		for url in urls:
 			yield scrapy.Request(url=url, callback=self.parse)
 
 	def parse(self, response):
-		if response.url == 'http://cheese.com':
-			info = ['parmesan/']
-			# print(info)
-			# print(len(info))
-			base_url = 'http:cheese.com/'
-			for page in info:
-				page = base_url + page
-				yield scrapy.Request(page, callback=self.parse)
-			return
 		# print("response:", response.body)
-		pol_info = response.xpath('//title').extract()
-		print('parsed: ', pol_info)
+		title_info = response.xpath('//title').extract()
+		description = response.xpath('//meta').extract()
+		other_info = response.path('//p').extract()
+		print('title: ', pol_info)
+		print('description: ', description)
+		print('other info: ', other_info)
 		"""
 		name_path = response.url.split("/")[-1].split(".")[0]
 		pic_url = 'http://senate.ontheissues.org/pictures/' + name_path + '.jpg'
