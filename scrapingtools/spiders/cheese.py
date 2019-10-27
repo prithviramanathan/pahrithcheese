@@ -7,7 +7,7 @@ def cleanhtml(raw_html):
   cleantext = re.sub(cleanr, '', raw_html)
   return cleantext
 
-cheeses = 'parmesan gouda cheddar feta mozzarella brie pepper-jack'
+cheeses = 'parmesan gouda cheddar feta mozzarella brie pepper-jack alphabetical'
 cheese_array = cheeses.split()
 
 class CheeseSpider(scrapy.Spider):
@@ -18,7 +18,14 @@ class CheeseSpider(scrapy.Spider):
 			url = 'http://cheese.com/' + cheese
 			yield scrapy.Request(url=url, callback=self.parse)
 
+
 	def parse(self, response):
+        if response.url == 'https://cheese.com/alphabetical':
+			info = response.xpath('//h3/a/@href').extract()
+            info = list(info)
+            info = set(info)
+            print('cheeses: ', info)
+            return
 		# print("response:", response.body)
 	    cheese = CheeseItem()
 	    title_info = response.xpath('//title').extract()
