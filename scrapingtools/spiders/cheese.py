@@ -21,12 +21,16 @@ class CheeseSpider(scrapy.Spider):
 	def parse(self, response):
 		# print("response:", response.body)
 		title_info = response.xpath('//title').extract()
+                for item in title_info:
+                    print('title: ', cleanhtml(item))
 		description = response.xpath('//meta').extract()
-		other_info = response.path('//p').extract()
-		print('title: ', pol_info)
-		for item in description:
-			print('description: ', cleanhtml(item))
-		print('other info: ', other_info)
+                for item in description:
+                    if 'description' in item:
+                        a = item.split('content=')
+                        print('desription:', a[1])
+		other_info = response.xpath('//p').extract()
+		for item in other_info:
+			print('other info: ', cleanhtml(item))
 		"""
 		name_path = response.url.split("/")[-1].split(".")[0]
 		pic_url = 'http://senate.ontheissues.org/pictures/' + name_path + '.jpg'
