@@ -16,4 +16,3 @@ class PoliticianItem(scrapy.Item):
 class IssueItem(scrapy.Item):
     issue = scrapy.Field()
     stances = scrapy.Field()
-
