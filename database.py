@@ -61,14 +61,18 @@ def fill_pairings_table(cursor, db):
 def search_cheeses(cursor, cheese):
     sql_string = 'SELECT * FROM cheeses NATURAL JOIN pairings WHERE name = "' + cheese + '"'
     cursor.execute(sql_string)
-    result = cursor.fetchone()
-    return Cheese(result)
+    result = cursor.fetchall()
+    retval = []
+    for x in result:
+        retval.append(Cheese(x))
+    return retval
 
 def update_pairings(cursor, db, cheese, recipe):
     sql_string = "UPDATE pairings SET recipe = '" + recipe + "' WHERE name = '" + cheese + "'"
     cursor.execute(sql_string)
     db.commit()
 
+"""
 if __name__ == '__main__':
     my_db = mysql.connector.connect(
         user='root', password='Pahrithcheese!', database='pahrithcheese')
@@ -80,3 +84,4 @@ if __name__ == '__main__':
     #print('inserted elements')
     update_pairings(my_cursor, my_db, 'Abbaye de Belloc', '')
     print(search_cheeses(my_cursor, 'Abbaye de Belloc').recipe)
+"""

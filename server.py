@@ -1,20 +1,36 @@
 from flask import Flask
+import json
+from database import *
 app = Flask(__name__)
+db = mysql.connector.connect(
+    user='root', password='Pahrithcheese!', database='pahrithcheese')
+cursor = db.cursor()
 
 # Search for a cheese
 @app.route('/search', methods=['GET'])
 def search():
-    return 'no results'
+    cheese_name = request.args.get('cheeseName', '')
+    retval = search_cheeses(cursor, cheese_name)
+    return json.dumps(retval)
+
+@app.route('/update-pairings', methods=['POST'])
+def update_recipes():
+    data = request.form
+    try:
+        update_pairings(cursor, db, data.get('cheeseName', ''), data.get('pairing', ''))
+        return 'Updated cheese pairing'
+    except:
+        return 'Did not update'
 
 # add a friend
-@app.route('/add_friend', methods=['POST'])
+@app.route('/add-friend', methods=['POST'])
 def add_friend():
     return 'added friend'
 
 # add a cheese to favorites
-@app.route('/add_favorite', methods=['POST'])
+@app.route('/add-favorite', methods=['POST'])
 def add_cheese_to_favorites():
     return 'added cheese to favorites'
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=80)
