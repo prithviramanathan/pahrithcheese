@@ -1,20 +1,20 @@
 import mysql.connector
 import json
-def Cheese():
+class Cheese:
     def __init__(self, item):
         self.name = item[0]
         self.description = item[1]
-        self.region = item[3]
-        self.family = item[4]
-        self.fat_content = item[5]
-        self.color = item[6]
-        self.flavor = item[7]
-        self.aroma = item[8]
-        self.texture = item[9]
-        self.type = item[10]
-        self.country_of_origin = item[11]
-        self.image = item[12]
-        self.recipe = item[13]
+        self.region = item[2]
+        self.family = item[3]
+        self.fat_content = item[4]
+        self.color = item[5]
+        self.flavor = item[6]
+        self.aroma = item[7]
+        self.texture = item[8]
+        self.type = item[9]
+        self.country_of_origin = item[10]
+        self.image = item[11]
+        self.recipe = item[12]
 
 
 
@@ -64,10 +64,10 @@ def search_cheeses(cursor, cheese):
     result = cursor.fetchone()
     return Cheese(result)
 
-def update_pairings(cursor, cheese, recipe):
-    sql_string = "UPDATE pairings SET recipe = '" + recipe + "' WHERE name = '" + cheese + "' AND recipe ='" + recipe + "'"
+def update_pairings(cursor, db, cheese, recipe):
+    sql_string = "UPDATE pairings SET recipe = '" + recipe + "' WHERE name = '" + cheese + "'"
     cursor.execute(sql_string)
-    cursor.commit()
+    db.commit()
 
 if __name__ == '__main__':
     my_db = mysql.connector.connect(
@@ -76,8 +76,7 @@ if __name__ == '__main__':
     #create_cheese_table(my_cursor)
     #create_pairings_table(my_cursor)
     #fill_cheese_table(my_cursor, my_db)
-    fill_pairings_table(my_cursor, my_db)
+    #fill_pairings_table(my_cursor, my_db)
     #print('inserted elements')
-    my_cursor.execute('SELECT COUNT(*) FROM pairings')
-    for x in my_cursor:
-        print(x)
+    update_pairings(my_cursor, my_db, 'Abbaye de Belloc', '')
+    print(search_cheeses(my_cursor, 'Abbaye de Belloc').recipe)
