@@ -36,4 +36,10 @@ export class CheeseSearchComponent implements OnInit {
     });
   }
 
+  addPairing(cheese: string, pairing: string) {
+    this.cheeseService.updatePairing(cheese, pairing).subscribe((data) => {
+      console.log(data);
+    });
+  }
+
 }

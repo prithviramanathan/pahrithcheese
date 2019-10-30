@@ -45,8 +45,8 @@
     </mat-form-field>
 
     <mat-form-field>
-      <input [ngModel]="cheeseData?.pairing" disabled matInput placeholder="Pairings">
-      <mat-icon (click)="populateFields(cheese.value)" matSuffix>add</mat-icon>
+      <input #pairing (keyup.enter)="addPairing(cheese.value, pairing.value)" [ngModel]="cheeseData?.pairing" matInput placeholder="Pairings">
+      <mat-icon (click)="addPairing(cheese.value, pairing.value)" matSuffix>add</mat-icon>
     </mat-form-field>
   
     <mat-form-field>
