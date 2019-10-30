@@ -62,10 +62,7 @@ def search_cheeses(cursor, cheese):
     sql_string = 'SELECT * FROM cheeses NATURAL JOIN pairings WHERE name = "' + cheese + '"'
     cursor.execute(sql_string)
     result = cursor.fetchall()
-    retval = []
-    for x in result:
-        retval.append(vars(Cheese(x)))
-    return retval
+    return [vars(Cheese(x)) for x in result]
 
 def update_pairings(cursor, db, cheese, recipe):
     sql_string = "UPDATE pairings SET recipe = '" + recipe + "' WHERE name = '" + cheese + "'"

@@ -15,6 +15,8 @@ def search():
 
 @app.route('/update-pairings', methods=['POST'])
 def update_recipes():
+    print(json.dumps(request.form))
+    print(json.dumps(request.args))
     data = request.form
     try:
         update_pairings(cursor, db, data.get('cheeseName', ''), data.get('pairing', ''))
