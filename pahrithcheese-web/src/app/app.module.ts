@@ -5,8 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-
+import { FormsModule } from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
 import { CheeseSearchComponent } from './cheese-search/cheese-search.component';
 
 @NgModule({
@@ -19,6 +20,8 @@ import { CheeseSearchComponent } from './cheese-search/cheese-search.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatInputModule,
+    MatIconModule,
+    FormsModule,
     HttpClientModule
   ],
   providers: [],
