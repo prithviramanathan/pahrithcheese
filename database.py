@@ -14,7 +14,7 @@ class Cheese:
         self.type = item[9]
         self.country_of_origin = item[10]
         self.image = item[11]
-        self.recipe = item[12]
+        self.pairing = item[12]
 
 
 
