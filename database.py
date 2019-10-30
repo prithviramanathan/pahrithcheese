@@ -64,7 +64,7 @@ def search_cheeses(cursor, cheese):
     result = cursor.fetchall()
     retval = []
     for x in result:
-        retval.append(Cheese(x))
+        retval.append(vars(Cheese(x)))
     return retval
 
 def update_pairings(cursor, db, cheese, recipe):

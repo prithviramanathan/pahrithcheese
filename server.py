@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 import json
 from database import *
 app = Flask(__name__)
@@ -18,7 +18,7 @@ def update_recipes():
     data = request.form
     try:
         update_pairings(cursor, db, data.get('cheeseName', ''), data.get('pairing', ''))
-        return 'Updated cheese pairing'
+        return json.dumps(search_cheeses(cursor, data.get('cheeseName', '')))
     except:
         return 'Did not update'
 
