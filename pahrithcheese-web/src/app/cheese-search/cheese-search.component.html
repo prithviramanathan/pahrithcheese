@@ -5,10 +5,10 @@
   </mat-form-field>
 </div>
 
-<mat-grid-list cols="2" rowHeight="1.25:1">
+<mat-grid-list *ngIf="cheeseData" cols="2" rowHeight="1:1">
   <mat-grid-tile>
-    <div>
-      <mat-card class="card">
+    <div class="card">
+      <mat-card>
         <mat-card-header>
           <mat-card-title>{{ cheeseData.name }}</mat-card-title>
           <mat-card-subtitle>{{ cheeseData.family }}</mat-card-subtitle>
@@ -17,6 +17,9 @@
         <mat-card-content>
           <p class="mat-body-strong">{{ cheeseData?.description }}</p>
         </mat-card-content>
+        <mat-card-actions>
+          <button mat-flat-button>FAVORITE</button>
+        </mat-card-actions>
       </mat-card>
     </div>
   </mat-grid-tile>
