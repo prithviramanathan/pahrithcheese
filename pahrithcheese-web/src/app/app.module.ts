@@ -6,14 +6,17 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import {MatInputModule} from '@angular/material/input';
-import {MatIconModule} from '@angular/material/icon';
+import { MatToolbarModule, MatButtonModule, MatIconModule, MatInputModule } from '@angular/material';
 import { CheeseSearchComponent } from './cheese-search/cheese-search.component';
+import { HomePageComponent } from './home-page/home-page.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CheeseSearchComponent,
+    HomePageComponent,
+    ToolbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -21,6 +24,8 @@ import { CheeseSearchComponent } from './cheese-search/cheese-search.component';
     BrowserAnimationsModule,
     MatInputModule,
     MatIconModule,
+    MatButtonModule,
+    MatToolbarModule,
     FormsModule,
     HttpClientModule
   ],
