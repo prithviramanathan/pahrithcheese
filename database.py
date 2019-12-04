@@ -87,17 +87,19 @@ def add_friend(cursor, db, email1, email2):
 
 def create_stored_procedure_likes(cursor, db):
     sql = """
-    CREATE PROCEDURE ToggleLike @Cheese varchar(50), @Email varchar(50)
-    AS
-    IF EXISTS (SELECT * FROM likes WHERE cheese = @Cheese AND email = @EMAIL)
+    DELIMITER //
+    CREATE PROCEDURE ToggleLike(
+      IN c VARCHAR(50),
+      IN e VARCHAR(50)
+    )
     BEGIN
-        DELETE FROM likes WHERE cheese = @Cheese AND email = @Email
-    END
+    IF EXISTS (SELECT * FROM likes WHERE cheese = c AND email = e)
+        DELETE FROM likes WHERE cheese = c AND email = e;
     ELSE
-    BEGIN
-        INSERT INTO likes (email, cheese) VALUES (@Email, @Cheese)
-    END
-    END;
+        INSERT INTO likes (email, cheese) VALUES (e, c);
+    END //
+
+    DELIMITER ;
     """
     cursor.execute(sql)
     db.commit()
