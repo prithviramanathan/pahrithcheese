@@ -26,7 +26,8 @@ export interface Cheese {
 export class CheeseSearchComponent implements OnInit {
   cheeseData: Cheese;
 
-  constructor(private cheeseService: CheeseApiService, private toastrService: ToastrService) { }
+  constructor(private cheeseService: CheeseApiService, private toastrService: ToastrService) { 
+  }
 
   ngOnInit() {
   }
