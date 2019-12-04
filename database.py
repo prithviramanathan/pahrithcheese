@@ -87,7 +87,7 @@ def add_friend(cursor, db, email1, email2):
 
 def create_stored_procedure_likes(cursor, db):
     sql = """
-    CREATE PROCEDURE ToggleLike @Cheese nvarchar(50), @Email nvarchar(50)
+    CREATE PROCEDURE ToggleLike @Cheese varchar(50), @Email varchar(50)
     AS
     IF EXISTS (SELECT * FROM likes WHERE cheese = @Cheese AND email = @EMAIL)
     BEGIN
@@ -97,14 +97,14 @@ def create_stored_procedure_likes(cursor, db):
     BEGIN
         INSERT INTO likes (email, cheese) VALUES (@Email, @Cheese)
     END
-    GO;
+    END;
     """
     cursor.execute(sql)
     db.commit()
 
 def like_cheese(cursor, db, email, cheese):
     try:
-        sql = 'EXEC ToggleLike @Cheese = "' + cheese '", @Email = "' + email + '"';
+        sql = 'EXEC ToggleLike @Cheese = "' + cheese + '", @Email = "' + email + '"'
         cursor.execute(sql)
         db.commit()
         return 'liked the cheese'
@@ -129,6 +129,6 @@ if __name__ == '__main__':
     #print('inserted elements')
     # update_pairings(my_cursor, my_db, 'Abbaye de Belloc', '')
     # print(search_cheeses(my_cursor, 'Abbaye de Belloc').recipe)
-    create_likes_table(my_cursor, my_db)
-    create_friends_table(my_cursor, my_db)
+    # create_likes_table(my_cursor)
+    # create_friends_table(my_cursor)
     create_stored_procedure_likes(my_cursor, my_db)
