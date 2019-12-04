@@ -30,9 +30,25 @@ def add_friend():
     return 'added friend'
 
 # add a cheese to favorites
-@app.route('/add-favorite', methods=['POST'])
+@app.route('/toggle-like', methods=['POST'])
 def add_cheese_to_favorites():
-    return 'added cheese to favorites'
+    data = request.form
+    if data.get('email', '') == '' or data.get('cheese', '') == '':
+        return 'invalid params'
+    try:
+        like_cheese(cursor, db, data.get('email', ''), data.get('cheese', ''))
+        return 'added cheese to favorites'
+    except:
+        return 'failed to add cheese to favorite'
+
+@app.route('/get-profile', methods=['GET'])
+def get_profile():
+    email = request.args.get('email', '')
+    try:
+        return get_my_likes(cursor, email)
+    except:
+        return 'failed to load profile'
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)
