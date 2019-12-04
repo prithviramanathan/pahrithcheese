@@ -1,4 +1,4 @@
-<div class="example-container">
+<!-- <div class="example-container">
     <mat-form-field>
       <input matInput #cheese (keyup.enter)="populateFields(cheese.value)" placeholder="Cheese Name">
       <mat-icon (click)="populateFields(cheese.value)" matSuffix>search</mat-icon>
@@ -52,4 +52,29 @@
     <mat-form-field>
       <textarea [ngModel]="cheeseData?.description" disabled matInput placeholder="Description"></textarea>
     </mat-form-field>
-  </div>
+  </div> -->
+
+<div class="search">
+  <mat-form-field>
+    <input matInput #cheese (keyup.enter)="populateFields(cheese.value)" placeholder="Cheese Name">
+    <mat-icon (click)="populateFields(cheese.value)" matSuffix>search</mat-icon>
+  </mat-form-field>
+</div>
+
+<mat-grid-list cols="2" rowHeight="1.25:1">
+  <mat-grid-tile>
+    <div>
+      <mat-card class="card">
+        <mat-card-header>
+          <mat-card-title>{{ cheeseData.name }}</mat-card-title>
+          <mat-card-subtitle>{{ cheeseData.family }}</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image src="{{cheeseData?.image}}" alt="cheeseData?.name">
+        <mat-card-content>
+          <p>{{ cheeseData?.description }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile>2</mat-grid-tile>
+</mat-grid-list>

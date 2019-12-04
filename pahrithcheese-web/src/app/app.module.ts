@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { MatToolbarModule, MatButtonModule, MatIconModule, MatInputModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatIconModule, MatInputModule, MatGridListModule, MatCardModule, MatListModule } from '@angular/material';
 import { CheeseSearchComponent } from './cheese-search/cheese-search.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
@@ -26,6 +26,9 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,
+    MatGridListModule,
+    MatCardModule,
+    MatListModule,
     FormsModule,
     HttpClientModule
   ],
