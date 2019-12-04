@@ -13,7 +13,7 @@
           <mat-card-title>{{ cheeseData.name }}</mat-card-title>
           <mat-card-subtitle>{{ cheeseData.family }}</mat-card-subtitle>
         </mat-card-header>
-        <img mat-card-image src="{{cheeseData?.image}}" alt="cheeseData?.name">
+        <img *ngIf="cheeseData.image" mat-card-image src="{{cheeseData?.image}}" alt="{{cheeseData?.name}}">
         <mat-card-content>
           <p class="mat-body-strong">{{ cheeseData?.description }}</p>
         </mat-card-content>
@@ -39,7 +39,7 @@
       <mat-divider></mat-divider>
       <mat-list-item role="listitem"><b>Aroma:</b> &nbsp; {{ cheeseData.aroma }}</mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item role="listitem"><b>Fat Content:</b> &nbsp; {{ cheeseData.fat_content }}</mat-list-item>
+      <mat-list-item *ngIf="cheeseData.fat_content" role="listitem"><b>Fat Content:</b> &nbsp; {{ cheeseData.fat_content }}</mat-list-item>
       <mat-divider></mat-divider>
       <mat-list-item role="listitem"><b>Pairings:</b>
         <mat-form-field class="pairing-input">
