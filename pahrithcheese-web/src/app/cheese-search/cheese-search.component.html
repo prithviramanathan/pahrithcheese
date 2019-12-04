@@ -71,10 +71,36 @@
         </mat-card-header>
         <img mat-card-image src="{{cheeseData?.image}}" alt="cheeseData?.name">
         <mat-card-content>
-          <p>{{ cheeseData?.description }}</p>
+          <p class="mat-body-strong">{{ cheeseData?.description }}</p>
         </mat-card-content>
       </mat-card>
     </div>
   </mat-grid-tile>
-  <mat-grid-tile>2</mat-grid-tile>
+  <mat-grid-tile>
+    <mat-list role="list" class="detail-list">
+      <mat-list-item role="listitem"><b>Country of Origin:</b> &nbsp; {{ cheeseData.country_of_origin }}</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item role="listitem"><b>Region:</b> &nbsp; {{ cheeseData.region }}</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item role="listitem"><b>Type:</b> &nbsp; {{ cheeseData.type }}</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item role="listitem"><b>Color:</b> &nbsp; {{ cheeseData.color }}</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item role="listitem"><b>Flavor:</b> &nbsp; {{ cheeseData.flavor }}</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item role="listitem"><b>Texture:</b> &nbsp; {{ cheeseData.texture }}</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item role="listitem"><b>Aroma:</b> &nbsp; {{ cheeseData.aroma }}</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item role="listitem"><b>Fat Content:</b> &nbsp; {{ cheeseData.fat_content }}</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item role="listitem"><b>Pairings:</b>
+        <mat-form-field class="pairing-input">
+          <input #pairing (keyup.enter)="addPairing(cheese.value, pairing.value)" [ngModel]="cheeseData?.pairing" matInput>
+          <mat-icon (click)="addPairing(cheese.value, pairing.value)" matSuffix>add</mat-icon>
+        </mat-form-field>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+  </mat-grid-tile>
 </mat-grid-list>
