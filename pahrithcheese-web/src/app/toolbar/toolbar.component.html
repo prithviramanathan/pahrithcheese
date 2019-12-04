@@ -1,5 +1,8 @@
 <mat-toolbar>
         <span class="pahrithcheese" [routerLink]="['/search']"> Pahrithcheese </span>
         <span class="spacer"></span>
-        <mat-icon class="icon" [routerLink]="['/user']">person</mat-icon>
+        <mat-icon class="icon" (click)="goToUser()">person</mat-icon>
 </mat-toolbar>
+
+
+<!-- [routerLink]="['/user']" [queryParams]="{email: nickrao64}" -->
