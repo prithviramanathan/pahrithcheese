@@ -10,6 +10,7 @@ import { MatToolbarModule, MatButtonModule, MatIconModule, MatInputModule, MatGr
 import { CheeseSearchComponent } from './cheese-search/cheese-search.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     CheeseSearchComponent,
     HomePageComponent,
     ToolbarComponent,
+    UserComponent,
   ],
   imports: [
     BrowserModule,
