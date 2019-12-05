@@ -44,4 +44,16 @@ export class CheeseSearchComponent implements OnInit {
     });
   }
 
+  addToFavorites() {
+    this.cheeseService.toggleLike(this.cheeseService.getEmail(), this.cheeseData.name).subscribe((data) => {
+      console.log(data);
+      if(data[0] === 'removed like') {
+        this.toastrService.warning('Unfavorited the cheese!');
+      }
+      else if (data[0] === 'liked the cheese') {
+        this.toastrService.success('Favorited the cheese!');
+      }
+    });
+  }
+
 }

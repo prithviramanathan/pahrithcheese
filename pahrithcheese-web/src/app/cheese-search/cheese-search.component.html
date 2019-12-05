@@ -12,14 +12,12 @@
         <mat-card-header>
           <mat-card-title>{{ cheeseData.name }}</mat-card-title>
           <mat-card-subtitle>{{ cheeseData.family }}</mat-card-subtitle>
+          <button (click)="addToFavorites()" mat-flat-button>FAVORITE</button>
         </mat-card-header>
         <img *ngIf="cheeseData.image" mat-card-image src="{{cheeseData?.image}}" alt="{{cheeseData?.name}}">
         <mat-card-content>
           <p class="mat-body-strong">{{ cheeseData?.description }}</p>
         </mat-card-content>
-        <mat-card-actions>
-          <button mat-flat-button>FAVORITE</button>
-        </mat-card-actions>
       </mat-card>
     </div>
   </mat-grid-tile>

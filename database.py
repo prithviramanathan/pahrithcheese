@@ -101,7 +101,6 @@ def add_friend(cursor, db, email1, email2):
 
 def create_stored_procedure_likes(cursor, db):
     sql = """
-    DELIMITER //
     CREATE PROCEDURE ToggleLike(
       IN c VARCHAR(50),
       IN e VARCHAR(50)
