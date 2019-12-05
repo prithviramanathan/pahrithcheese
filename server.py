@@ -24,11 +24,6 @@ def update_recipes():
     except:
         return 'Did not update'
 
-# add a friend
-@app.route('/add-friend', methods=['POST'])
-def add_friend():
-    return 'added friend'
-
 # add a cheese to favorites
 @app.route('/toggle-like', methods=['POST'])
 def add_cheese_to_favorites():
@@ -47,7 +42,7 @@ def add_or_remove_friend():
     data = request.form
     if data.get('me', '') == '' or data.get('other_user', '') == '':
         return 'invalid params'
-    try:
+    try: 
         value = add_friend(cursor, db, data.get('me'), data.get('other_user'))
         return value
     except:
@@ -57,10 +52,9 @@ def add_or_remove_friend():
 def get_profile():
     email = request.args.get('email', '')
     try:
-        return json.dumps(get_profile(cursor, email))
+        return json.dumps(get_user_profile(cursor, email))
     except:
-        return 'failed to load profile'
-
+        print('failed to load profile')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)
