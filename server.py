@@ -11,53 +11,71 @@ cursor = db.cursor()
 def search():
     cheese_name = request.args.get('cheeseName', '')
     retval = search_cheeses(cursor, cheese_name)
-    return json.dumps(retval)
+    mystr = json.dumps(retval)
+    resp = make_response(mystr)
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    return resp
 
 @app.route('/update-pairings', methods=['POST'])
 def update_recipes():
     print(json.dumps(request.form))
     print(json.dumps(request.args))
     data = request.form
+    mystr = ''
     try:
         update_pairings(cursor, db, data.get('cheeseName', ''), data.get('pairing', ''))
-        return json.dumps(search_cheeses(cursor, data.get('cheeseName', '')))
+        mystr = json.dumps(search_cheeses(cursor, data.get('cheeseName', '')))
     except:
-        return 'Did not update'
+        mystr = 'Did not update'
+    resp = make_response(mystr)
+    resp.headers[                             ] =
+    return resp
 
 
 # add a cheese to favorites
 @app.route('/toggle-like', methods=['POST'])
 def add_cheese_to_favorites():
     data = request.form
+    mystr = ''
     if data.get('email', '') == '' or data.get('cheese', '') == '':
-        return json.dumps(['invalid params'])
+        mystr = json.dumps(['invalid params'])
     try:
         value = like_cheese(cursor, db, data.get('email', ''), data.get('cheese', ''))
-        return json.dumps([value])
+        mystr = json.dumps([value])
     except:
-        return json.dumps(['failed to add cheese to favorite'])
+        mystr = json.dumps(['failed to add cheese to favorite'])
+    resp = make_response(mystr)
+    resp.headers[                             ] =
+    return resp
 
 # adds or removes a friend
 @app.route('/toggle-friend', methods=['POST'])
 def add_or_remove_friend():
     data = request.form
+    mystr = ''
     if data.get('me', '') == '' or data.get('other_user', '') == '':
-        return json.dumps(['invalid params'])
+        mystr = json.dumps(['invalid params'])
     try:
         value = add_friend(cursor, db, data.get('me'), data.get('other_user'))
-        return json.dumps([value])
+        mystr = json.dumps([value])
     except:
-        return json.dumps(['failed to add friend'])
+        mystr = json.dumps(['failed to add friend'])
+    resp = make_response(mystr)
+    resp.headers[                             ] =
+    return resp
 
 @app.route('/get-profile', methods=['GET'])
 def get_profile():
+    mystr = ''
     email = request.args.get('email', '')
     try:
-        return json.dumps(get_user_profile(cursor, email))
+        mystr =  json.dumps(get_user_profile(cursor, email))
 
     except:
-        return json.dumps(['failed to load profile'])
-
+        mystr =  json.dumps(['failed to load profile'])
+    resp = make_response(mystr)
+    resp.headers[                             ] =
+    return resp
 
 @app.route('/shared-preferences', methods= ['GET'])
 def shared():
