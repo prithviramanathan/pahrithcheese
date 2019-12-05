@@ -28,7 +28,7 @@ def update_recipes():
     except:
         mystr = 'Did not update'
     resp = make_response(mystr)
-    resp.headers[                             ] =
+    resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 
 
@@ -45,7 +45,7 @@ def add_cheese_to_favorites():
     except:
         mystr = json.dumps(['failed to add cheese to favorite'])
     resp = make_response(mystr)
-    resp.headers[                             ] =
+    resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 
 # adds or removes a friend
@@ -61,7 +61,7 @@ def add_or_remove_friend():
     except:
         mystr = json.dumps(['failed to add friend'])
     resp = make_response(mystr)
-    resp.headers[                             ] =
+    resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 
 @app.route('/get-profile', methods=['GET'])
@@ -74,7 +74,7 @@ def get_profile():
     except:
         mystr =  json.dumps(['failed to load profile'])
     resp = make_response(mystr)
-    resp.headers[                             ] =
+    resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 
 @app.route('/shared-preferences', methods= ['GET'])
