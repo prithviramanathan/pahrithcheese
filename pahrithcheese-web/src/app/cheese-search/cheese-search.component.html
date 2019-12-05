@@ -18,7 +18,7 @@
           <p class="mat-body-strong">{{ cheeseData?.description }}</p>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-flat-button>FAVORITE</button>
+          <button (click)="addToFavorites()" mat-flat-button>FAVORITE</button>
         </mat-card-actions>
       </mat-card>
     </div>

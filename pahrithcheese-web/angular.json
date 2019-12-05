@@ -68,7 +68,9 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "pahrithcheese-web:build"
+            "browserTarget": "pahrithcheese-web:build",
+            "host": "0.0.0.0",
+            "port": 80
           },
           "configurations": {
             "production": {

@@ -44,4 +44,8 @@ export class CheeseSearchComponent implements OnInit {
     });
   }
 
+  addToFavorites() {
+    this.toastrService.info('Added to favorites!');
+  }
+
 }
