@@ -78,11 +78,25 @@ def update_pairings(cursor, db, cheese, recipe):
     cursor.execute(sql_string)
     db.commit()
 
+# toggles the friendship status for a friend (email2)
 def add_friend(cursor, db, email1, email2):
-    sql = "INSERT INTO friends (email1, email2) VALUES (%s, %s)"
-    val = (email1, email2)
-    cursor.execute(sql, val)
-    db.commit()
+    sql = 'SELECT * FROM friends WHERE email1 = "' + email1 + '" AND email2 = "' + email2 + '"'
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    if len(result) == 0:
+        print('adding friend')
+        sql = 'INSERT INTO friends (email1, email2) values (%s, %s)'
+        val = (email1, email2)
+        cursor.execute(sql, val)
+        db.commit()
+        return 'added a friend'
+    else:
+        print('removing friend')
+        sql = 'DELETE FROM friends WHERE email1 = "' + email1 + '" AND email2 = "' + email2 + '"'
+        cursor.execute(sql)
+        db.commit()
+        return 'removed friend'
+
 
 
 def create_stored_procedure_likes(cursor, db):
@@ -91,34 +105,72 @@ def create_stored_procedure_likes(cursor, db):
       IN c VARCHAR(50),
       IN e VARCHAR(50)
     )
-    BEGIN
-        IF EXISTS (SELECT * FROM likes WHERE cheese = c AND email = e)
         BEGIN
-            DELETE FROM likes WHERE cheese = c AND email = e;
-        END
-        ELSE
-        BEGIN
-            INSERT INTO likes (email, cheese) VALUES (e, c);
-        END
-    END 
+            IF EXISTS (SELECT * FROM likes WHERE cheese = c AND email = e)
+                DELETE FROM likes WHERE cheese = c AND email = e;
+            ELSE
+                INSERT INTO likes (email, cheese) VALUES (e, c);
+        END //
+    DELIMITER ;
     """
     cursor.execute(sql)
     db.commit()
 
 def like_cheese(cursor, db, email, cheese):
-    try:
-        sql = 'EXEC ToggleLike @Cheese = "' + cheese + '", @Email = "' + email + '"'
-        cursor.execute(sql)
+    """
+    sql = 'EXEC ToggleLike @Cheese = "' + cheese + '", @Email = "' + email + '"'
+    cursor.execute(sql)
+    db.commit()
+    """
+    sql = 'SELECT * FROM likes WHERE cheese = "' + cheese + '" AND email = "' + email + '"'
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    if len(result) == 0:
+        sql = 'INSERT INTO likes (email, cheese) values (%s, %s)'
+        val = (email, cheese)
+        cursor.execute(sql, val)
         db.commit()
         return 'liked the cheese'
-    except:
-        return 'failed to like the cheese'
+    else:
+        sql = 'DELETE FROM likes WHERE cheese = "' + cheese + '" AND email = "' + email + '"'
+        cursor.execute(sql)
+        db.commit()
+        return 'removed like'
+
 
 def get_my_likes(cursor, email):
     sql = 'SELECT cheese FROM likes WHERE email = "' + email + '";'
     cursor.execute(sql)
     result = cursor.fetchall()
     return result
+
+def get_my_friends(cursor, email):
+    sql = 'SELECT email2 FROM friends WHERE email1 = "' + email + '"'
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    return result
+
+def shared_preferences(cursor, email):
+    sql = 'SELECT l.cheese, f.email2 FROM likes l JOIN friends f ON l.email = f.email1 WHERE l.email = "' + email + '" AND l.cheese IN (SELECT cheese from likes l2 WHERE l2.email = f.email2)'
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    return result
+
+
+
+
+def get_user_profile(cursor, email):
+    friends = get_my_friends(cursor, email)
+    cheeses =  get_my_likes(cursor, email)
+    friend_shared_cheeses = shared_preferences(cursor, email)
+    for i in range(len(friends)):
+        friends[i] = friends[i][0]
+    for i in range(len(cheeses)):
+        cheeses[i] = cheeses[i][0]
+    for i in range(len(friend_shared_cheeses)):
+        friend_shared_cheeses[i] = {'friend': friend_shared_cheeses[i][1], 'shared preference': friend_shared_cheeses[i][0]}
+    return {'friends': friends, 'liked cheeses': cheeses, 'email': email, 'friends who share interests': friend_shared_cheeses}
+
 
 
 if __name__ == '__main__':
@@ -134,4 +186,4 @@ if __name__ == '__main__':
     # print(search_cheeses(my_cursor, 'Abbaye de Belloc').recipe)
     # create_likes_table(my_cursor)
     # create_friends_table(my_cursor)
-    create_stored_procedure_likes(my_cursor, my_db)
+    # create_stored_procedure_likes(my_cursor, my_db)

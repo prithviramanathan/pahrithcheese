@@ -24,10 +24,6 @@ def update_recipes():
     except:
         return 'Did not update'
 
-# add a friend
-@app.route('/add-friend', methods=['POST'])
-def add_friend():
-    return 'added friend'
 
 # add a cheese to favorites
 @app.route('/toggle-like', methods=['POST'])
@@ -36,19 +32,37 @@ def add_cheese_to_favorites():
     if data.get('email', '') == '' or data.get('cheese', '') == '':
         return 'invalid params'
     try:
-        like_cheese(cursor, db, data.get('email', ''), data.get('cheese', ''))
-        return 'added cheese to favorites'
+        value = like_cheese(cursor, db, data.get('email', ''), data.get('cheese', ''))
+        return value
     except:
         return 'failed to add cheese to favorite'
+
+# adds or removes a friend
+@app.route('/toggle-friend', methods=['POST'])
+def add_or_remove_friend():
+    data = request.form
+    if data.get('me', '') == '' or data.get('other_user', '') == '':
+        return 'invalid params'
+    try:
+        value = add_friend(cursor, db, data.get('me'), data.get('other_user'))
+        return value
+    except:
+        return 'failed to add friend'
 
 @app.route('/get-profile', methods=['GET'])
 def get_profile():
     email = request.args.get('email', '')
     try:
-        return get_my_likes(cursor, email)
+        return json.dumps(get_user_profile(cursor, email))
+
     except:
         return 'failed to load profile'
 
+
+@app.route('/shared-preferences', methods= ['GET'])
+def shared():
+    email = request.args.get('email', '')
+    return json.dumps(shared_preferences(cursor, email))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)
