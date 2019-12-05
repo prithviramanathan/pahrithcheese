@@ -1,16 +1,24 @@
 from flask import Flask, request
 import json
+import flask
 from database import *
+from pymongo import MongoClient
+
 app = Flask(__name__)
 db = mysql.connector.connect(
     user='root', password='Pahrithcheese!', database='pahrithcheese')
 cursor = db.cursor()
+client = MongoClient(port=27017)
+mongodb=client.pahrithcheese
+
+
+
 
 # Search for a cheese
 @app.route('/search', methods=['GET'])
 def search():
     cheese_name = request.args.get('cheeseName', '')
-    retval = search_cheeses(cursor, cheese_name)
+    retval = search_cheeses(cursor, mongodb, cheese_name)
     mystr = json.dumps(retval)
     resp = flask.Response(mystr)
     resp.headers['Access-Control-Allow-Origin'] = '*'
@@ -24,7 +32,8 @@ def update_recipes():
     mystr = ''
     try:
         update_pairings(cursor, db, data.get('cheeseName', ''), data.get('pairing', ''))
-        mystr = json.dumps(search_cheeses(cursor, data.get('cheeseName', '')))
+        mystr = json.dumps(search_cheeses(cursor, mongodb, data.get('cheeseName', '')))
+        print('return value', mystr)
     except:
         mystr = 'Did not update'
     resp = flask.Response(mystr)
