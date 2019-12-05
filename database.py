@@ -117,25 +117,10 @@ def create_stored_procedure_likes(cursor, db):
     db.commit()
 
 def like_cheese(cursor, db, email, cheese):
-    """
     sql = 'EXEC ToggleLike @Cheese = "' + cheese + '", @Email = "' + email + '"'
     cursor.execute(sql)
     db.commit()
-    """
-    sql = 'SELECT * FROM likes WHERE cheese = "' + cheese + '" AND email = "' + email + '"'
-    cursor.execute(sql)
-    result = cursor.fetchall()
-    if len(result) == 0:
-        sql = 'INSERT INTO likes (email, cheese) values (%s, %s)'
-        val = (email, cheese)
-        cursor.execute(sql, val)
-        db.commit()
-        return 'liked the cheese'
-    else:
-        sql = 'DELETE FROM likes WHERE cheese = "' + cheese + '" AND email = "' + email + '"'
-        cursor.execute(sql)
-        db.commit()
-        return 'removed like'
+    return "toggled like"
 
 
 def get_my_likes(cursor, email):
