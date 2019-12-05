@@ -10,6 +10,12 @@
           <mat-card-title>Friends</mat-card-title>
         </mat-card-header>
         <mat-card-content>
+            <mat-list role="list" class="detail-list">
+              <div *ngFor="let friend of friends">
+                <mat-list-item  role="listitem">{{ friends }}</mat-list-item>
+                <mat-divider></mat-divider>
+              </div>
+            </mat-list>
         </mat-card-content>
         <mat-card-actions>
           <button mat-flat-button>ADD FRIEND</button>
@@ -25,6 +31,12 @@
             <mat-card-title>Favorite Cheeses</mat-card-title>
           </mat-card-header>
           <mat-card-content>
+              <mat-list role="list" class="detail-list">
+                <div *ngFor="let favorite of favorites">
+                  <mat-list-item  role="listitem">{{ favorite }}</mat-list-item>
+                  <mat-divider></mat-divider>
+                </div>
+              </mat-list>
           </mat-card-content>
         </mat-card>
       </div>
