@@ -38,7 +38,10 @@
           <mat-card-content>
               <mat-list role="list" class="detail-list">
                 <div *ngFor="let favorite of favorites">
-                  <mat-list-item  role="listitem">{{ favorite }}</mat-list-item>
+                  <mat-list-item  role="listitem">
+                    <h4 matLine>{{ favorite }}</h4>
+                    <p matLine *ngIf="shared[favorite]">{{ shared[favorite] }} like(s) this.</p>
+                  </mat-list-item>
                   <mat-divider></mat-divider>
                 </div>
               </mat-list>

@@ -14,6 +14,7 @@ export class UserComponent implements OnInit {
   friends: [string];
   userEmail: string;
   addEmail: string;
+  shared: Object;
 
   constructor(private cheeseService: CheeseApiService, private route: ActivatedRoute, private router: Router, private toastrService: ToastrService) { }
 
@@ -42,8 +43,11 @@ export class UserComponent implements OnInit {
 
   getProfile() {
     this.cheeseService.getProfile(this.email).subscribe((data) => {
+      console.log(data);
       this.favorites = data["liked cheeses"];
       this.friends = data["friends"];
+      this.shared = data["friends who share interests"];
+      console.log(this.shared["Gouda"]);
     });
   }
 
