@@ -1,5 +1,6 @@
 from flask import Flask, request
 import json
+import flask
 from database import *
 app = Flask(__name__)
 db = mysql.connector.connect(

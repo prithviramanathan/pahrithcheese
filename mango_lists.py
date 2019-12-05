@@ -10,7 +10,7 @@ with open('cheese.json') as c:
 	cheese = json.load(c)
 	cheeses = cheese['cheeses']
 
-	for i in range(1, 500):
+	for i in range(1, 501):
 		x = random.randint(1, 20)
 		cheese_list = []
 		for j in range(0, x):
