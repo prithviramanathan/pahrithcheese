@@ -35,6 +35,14 @@ export class CheeseApiService {
     return this.httpClient.post(`http://3.15.32.200/toggle-like`, body, httpOptions);
   }
 
+  public toggleFriend(me: string, addFriend: string) {
+    console.log(me, addFriend);
+    let body = new HttpParams();
+    body = body.set('me', me);
+    body = body.set('other_user', addFriend);
+    return this.httpClient.post(`http://3.15.32.200/toggle-friend`, body, httpOptions);
+  }
+
   public getProfile(email: string) {
     return this.httpClient.get(`http://3.15.32.200/get-profile?email=${email}`);
   }

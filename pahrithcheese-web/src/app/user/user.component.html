@@ -12,13 +12,18 @@
         <mat-card-content>
             <mat-list role="list" class="detail-list">
               <div *ngFor="let friend of friends">
-                <mat-list-item  role="listitem">{{ friends }}</mat-list-item>
+                <mat-list-item (click)="goToUser(friend)" role="listitem">{{ friend }}</mat-list-item>
                 <mat-divider></mat-divider>
               </div>
             </mat-list>
         </mat-card-content>
-        <mat-card-actions>
-          <button mat-flat-button>ADD FRIEND</button>
+        <mat-card-actions *ngIf="email == userEmail">
+          <mat-form-field class="add-friend">
+            <input [(ngModel)]="addEmail" matInput type="text" placeholder="Email" (keyup.enter)="toggleFriend()">
+            <button mat-button mat-icon-button matSuffix (click)="toggleFriend()">
+              <mat-icon>add</mat-icon>
+            </button>
+          </mat-form-field>
         </mat-card-actions>
       </mat-card>
     </div>
