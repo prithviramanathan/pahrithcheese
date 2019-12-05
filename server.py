@@ -32,7 +32,8 @@ def update_recipes():
     mystr = ''
     try:
         update_pairings(cursor, db, data.get('cheeseName', ''), data.get('pairing', ''))
-        mystr = json.dumps(search_cheeses(cursor, data.get('cheeseName', '')))
+        mystr = json.dumps(search_cheeses(cursor, mongodb, data.get('cheeseName', '')))
+        print('return value', mystr)
     except:
         mystr = 'Did not update'
     resp = flask.Response(mystr)
