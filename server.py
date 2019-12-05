@@ -53,12 +53,13 @@ def add_or_remove_friend():
 def get_profile():
     email = request.args.get('email', '')
     try:
-        return json.dumps(get_profile(cursor, email))
+        return json.dumps(get_user_profile(cursor, email))
+
     except:
         return 'failed to load profile'
 
 
-@app.route('/shared-preferences', methods['GET'])
+@app.route('/shared-preferences', methods= ['GET'])
 def shared():
     email = request.args.get('email', '')
     return json.dumps(shared_preferences(cursor, email))

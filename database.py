@@ -151,21 +151,26 @@ def get_my_friends(cursor, email):
     result = cursor.fetchall()
     return result
 
-def get_user_profile(cursor, email):
-    friends = get_my_friends(cursor, email)
-    cheeses =  get_my_likes(cursor, email)
-    for i in range(len(friends)):
-        friends[i] = friends[i][0]
-    for i in range(len(cheeses)):
-        cheeses[i] = cheeses[i][0]
-    return {'friends': friends, 'cheeses': cheeses, 'email': email}
-
-
 def shared_preferences(cursor, email):
     sql = 'SELECT l.cheese, f.email2 FROM likes l JOIN friends f ON l.email = f.email1 WHERE l.email = "' + email + '" AND l.cheese IN (SELECT cheese from likes l2 WHERE l2.email = f.email2)'
     cursor.execute(sql)
     result = cursor.fetchall()
     return result
+
+
+
+
+def get_user_profile(cursor, email):
+    friends = get_my_friends(cursor, email)
+    cheeses =  get_my_likes(cursor, email)
+    friend_shared_cheeses = shared_preferences(cursor, email)
+    for i in range(len(friends)):
+        friends[i] = friends[i][0]
+    for i in range(len(cheeses)):
+        cheeses[i] = cheeses[i][0]
+    for i in range(len(friend_shared_cheeses)):
+        friend_shared_cheeses[i] = {'friend': friend_shared_cheeses[i][1], 'shared preference': friend_shared_cheeses[i][0]}
+    return {'friends': friends, 'liked cheeses': cheeses, 'email': email, 'friends who share interests': friend_shared_cheeses}
 
 
 
