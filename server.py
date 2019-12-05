@@ -30,24 +30,24 @@ def update_recipes():
 def add_cheese_to_favorites():
     data = request.form
     if data.get('email', '') == '' or data.get('cheese', '') == '':
-        return 'invalid params'
+        return json.dumps(['invalid params'])
     try:
         value = like_cheese(cursor, db, data.get('email', ''), data.get('cheese', ''))
-        return value
+        return json.dumps([value])
     except:
-        return 'failed to add cheese to favorite'
+        return json.dumps(['failed to add cheese to favorite'])
 
 # adds or removes a friend
 @app.route('/toggle-friend', methods=['POST'])
 def add_or_remove_friend():
     data = request.form
     if data.get('me', '') == '' or data.get('other_user', '') == '':
-        return 'invalid params'
+        return json.dumps(['invalid params'])
     try:
         value = add_friend(cursor, db, data.get('me'), data.get('other_user'))
-        return value
+        return json.dumps([value])
     except:
-        return 'failed to add friend'
+        return json.dumps(['failed to add friend'])
 
 @app.route('/get-profile', methods=['GET'])
 def get_profile():
@@ -56,7 +56,7 @@ def get_profile():
         return json.dumps(get_user_profile(cursor, email))
 
     except:
-        return 'failed to load profile'
+        return json.dumps(['failed to load profile'])
 
 
 @app.route('/shared-preferences', methods= ['GET'])
