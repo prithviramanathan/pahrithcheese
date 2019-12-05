@@ -145,7 +145,7 @@ def get_my_likes(cursor, email):
     return result
 
 def get_my_friends(cursor, email):
-    sql = 'SELECT email2 FROM friends WHERE email2 = "' + email + '"'
+    sql = 'SELECT email2 FROM friends WHERE email1 = "' + email + '"'
     cursor.execute(sql)
     result = cursor.fetchall()
     return result
