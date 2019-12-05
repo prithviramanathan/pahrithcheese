@@ -2,16 +2,23 @@ from flask import Flask, request
 import json
 import flask
 from database import *
+from pymongo import MongoClient
+
 app = Flask(__name__)
 db = mysql.connector.connect(
     user='root', password='Pahrithcheese!', database='pahrithcheese')
 cursor = db.cursor()
+client = MongoClient(port=27017)
+mongodb=client.pahrithcheese
+
+
+
 
 # Search for a cheese
 @app.route('/search', methods=['GET'])
 def search():
     cheese_name = request.args.get('cheeseName', '')
-    retval = search_cheeses(cursor, cheese_name)
+    retval = search_cheeses(cursor, mongodb, cheese_name)
     mystr = json.dumps(retval)
     resp = flask.Response(mystr)
     resp.headers['Access-Control-Allow-Origin'] = '*'
