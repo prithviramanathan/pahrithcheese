@@ -92,26 +92,38 @@ def create_stored_procedure_likes(cursor, db):
       IN c VARCHAR(50),
       IN e VARCHAR(50)
     )
-    BEGIN
-    IF EXISTS (SELECT * FROM likes WHERE cheese = c AND email = e)
-        DELETE FROM likes WHERE cheese = c AND email = e;
-    ELSE
-        INSERT INTO likes (email, cheese) VALUES (e, c);
-    END //
-
+        BEGIN
+            IF EXISTS (SELECT * FROM likes WHERE cheese = c AND email = e)
+                DELETE FROM likes WHERE cheese = c AND email = e;
+            ELSE
+                INSERT INTO likes (email, cheese) VALUES (e, c);
+        END //
     DELIMITER ;
     """
     cursor.execute(sql)
     db.commit()
 
 def like_cheese(cursor, db, email, cheese):
-    try:
-        sql = 'EXEC ToggleLike @Cheese = "' + cheese + '", @Email = "' + email + '"'
-        cursor.execute(sql)
+    """
+    sql = 'EXEC ToggleLike @Cheese = "' + cheese + '", @Email = "' + email + '"'
+    cursor.execute(sql)
+    db.commit()
+    """
+    sql = 'SELECT * FROM likes WHERE cheese = "' + cheese + '" AND email = "' + email + '"'
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    if len(result) == 0:
+        sql = 'INSERT INTO likes (email, cheese) values (%s, %s)'
+        val = (email, cheese)
+        cursor.execute(sql, val)
         db.commit()
         return 'liked the cheese'
-    except:
-        return 'failed to like the cheese'
+    else:
+        sql = 'DELETE FROM likes WHERE cheese = "' + cheese + '" AND email = "' + email + '"'
+        cursor.execute(sql)
+        db.commit()
+        return 'removed like'
+
 
 def get_my_likes(cursor, email):
     sql = 'SELECT cheese FROM likes WHERE email = "' + email + '";'
@@ -133,4 +145,4 @@ if __name__ == '__main__':
     # print(search_cheeses(my_cursor, 'Abbaye de Belloc').recipe)
     # create_likes_table(my_cursor)
     # create_friends_table(my_cursor)
-    create_stored_procedure_likes(my_cursor, my_db)
+    # create_stored_procedure_likes(my_cursor, my_db)

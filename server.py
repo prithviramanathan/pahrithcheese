@@ -36,8 +36,8 @@ def add_cheese_to_favorites():
     if data.get('email', '') == '' or data.get('cheese', '') == '':
         return 'invalid params'
     try:
-        like_cheese(cursor, db, data.get('email', ''), data.get('cheese', ''))
-        return 'added cheese to favorites'
+        value = like_cheese(cursor, db, data.get('email', ''), data.get('cheese', ''))
+        return value
     except:
         return 'failed to add cheese to favorite'
 
