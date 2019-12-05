@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CheeseApiService } from '../services/cheese-api.service';
 import { ToastrService } from 'ngx-toastr';
 
+export interface Store {
+  storeAddress: string;
+  storeName: string;
+}
 export interface Cheese {
   country_of_origin: string;
   fat_content: string;
@@ -16,6 +20,7 @@ export interface Cheese {
   type: string;
   image: string;
   description: string;
+  locations: [Store];
 }
 
 @Component({
@@ -39,6 +44,7 @@ export class CheeseSearchComponent implements OnInit {
   }
 
   addPairing(cheese: string, pairing: string) {
+    console.log(cheese, pairing);
     this.cheeseService.updatePairing(cheese, pairing).subscribe((data) => {
       this.toastrService.success('Updated pairing!');
     });

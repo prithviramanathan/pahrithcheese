@@ -1,9 +1,12 @@
 import mysql.connector
 import json
+from mongofunctions import *
 class Cheese:
-    def __init__(self, item):
+    def __init__(self, item, locations):
         self.name = item[0]
         self.description = item[1]
+        self.description = self.description.replace('&quot;', '\"')
+        self.description = self.description.replace('&amp;nbsp;', ' ')
         self.region = item[2]
         self.family = item[3]
         self.fat_content = item[4]
@@ -15,6 +18,13 @@ class Cheese:
         self.country_of_origin = item[10]
         self.image = item[11]
         self.pairing = item[12]
+        self.locations = []
+        for elem in locations:
+            f = {}
+            f['storeName'] = elem['store_name']
+            f['storeAddress'] = elem['address']
+            self.locations.append(f)
+            
 
 
 
@@ -66,11 +76,12 @@ def fill_pairings_table(cursor, db):
         cursor.execute(sql, val)
         db.commit()
 
-def search_cheeses(cursor, cheese):
+def search_cheeses(cursor, mongodb, cheese):
     sql_string = 'SELECT * FROM cheeses NATURAL JOIN pairings WHERE name = "' + cheese + '"'
     cursor.execute(sql_string)
     result = cursor.fetchall()
-    return [vars(Cheese(x)) for x in result]
+    locations = find_cheese_locations(mongodb, cheese)
+    return [vars(Cheese(x, locations)) for x in result]
 
 
 def update_pairings(cursor, db, cheese, recipe):
@@ -142,7 +153,7 @@ def format_shared(list):
         if elem[0] not in retval:
             retval[elem[0]] = []
         retval[elem[0]].append(elem[1])
-
+    return retval
 
 def shared_preferences(cursor, email):
     sql = 'SELECT l.cheese, f.email2 FROM likes l JOIN friends f ON l.email = f.email1 WHERE l.email = "' + email + '" AND l.cheese IN (SELECT cheese from likes l2 WHERE l2.email = f.email2)'
