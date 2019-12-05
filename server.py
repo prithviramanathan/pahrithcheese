@@ -12,7 +12,7 @@ def search():
     cheese_name = request.args.get('cheeseName', '')
     retval = search_cheeses(cursor, cheese_name)
     mystr = json.dumps(retval)
-    resp = make_response(mystr)
+    resp = flask.Response(mystr)
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 
@@ -27,7 +27,7 @@ def update_recipes():
         mystr = json.dumps(search_cheeses(cursor, data.get('cheeseName', '')))
     except:
         mystr = 'Did not update'
-    resp = make_response(mystr)
+    resp = flask.Response(mystr)
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 
@@ -44,7 +44,7 @@ def add_cheese_to_favorites():
         mystr = json.dumps([value])
     except:
         mystr = json.dumps(['failed to add cheese to favorite'])
-    resp = make_response(mystr)
+    resp = flask.Response(mystr)
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 
@@ -60,7 +60,7 @@ def add_or_remove_friend():
         mystr = json.dumps([value])
     except:
         mystr = json.dumps(['failed to add friend'])
-    resp = make_response(mystr)
+    resp = flask.Response(mystr)
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 
@@ -73,7 +73,7 @@ def get_profile():
 
     except:
         mystr =  json.dumps(['failed to load profile'])
-    resp = make_response(mystr)
+    resp = flask.Response(mystr)
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 
