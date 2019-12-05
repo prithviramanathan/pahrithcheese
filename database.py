@@ -84,12 +84,14 @@ def add_friend(cursor, db, email1, email2):
     cursor.execute(sql)
     result = cursor.fetchall()
     if len(result) == 0:
+        print('adding friend')
         sql = 'INSERT INTO friends (email1, email2) values (%s, %s)'
         val = (email1, cheese2)
         cursor.execute(sql, val)
         db.commit()
         return 'added a friend'
     else:
+        print('removing friend')
         sql = 'DELETE FROM friends WHERE email1 = "' + email1 + '" AND email2 = "' + email2 + '"'
         cursor.execute(sql)
         db.commit()
@@ -151,10 +153,14 @@ def get_my_friends(cursor, email):
 def get_profile(cursor, email):
     friends = get_my_friends(cursor, email)
     cheeses =  get_my_likes(cursor, email)
+    print(friends)
+    print(cheeses)
+    """
     for i in range(len(friends)):
         friends[i] = friends[i][0]
     for i in range(len(cheeses)):
         cheeses[i] = cheeses[i][0]
+    """
     return {'friends': friends, 'cheeses': cheeses, 'email': email}
 
 if __name__ == '__main__':

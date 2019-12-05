@@ -45,7 +45,7 @@ def add_cheese_to_favorites():
 @app.route('/toggle-friend', methods=['POST'])
 def add_or_remove_friend():
     data = request.form
-    if data.get('me', '') == '' or data.get('other_user', ''):
+    if data.get('me', '') == '' or data.get('other_user', '') == '':
         return 'invalid params'
     try:
         value = add_friend(cursor, db, data.get('me'), data.get('other_user'))
@@ -57,7 +57,7 @@ def add_or_remove_friend():
 def get_profile():
     email = request.args.get('email', '')
     try:
-        return get_profile(cursor, email)
+        return json.dumps(get_profile(cursor, email))
     except:
         return 'failed to load profile'
 
