@@ -98,6 +98,7 @@ def add_friend(cursor, db, email1, email2):
         return 'removed friend'
 
 
+
 def create_stored_procedure_likes(cursor, db):
     sql = """
     DELIMITER //
@@ -158,6 +159,15 @@ def get_user_profile(cursor, email):
     for i in range(len(cheeses)):
         cheeses[i] = cheeses[i][0]
     return {'friends': friends, 'cheeses': cheeses, 'email': email}
+
+
+def shared_preferences(cursor, email):
+    sql = 'SELECT l.cheese, f.email2 FROM likes l JOIN friends f ON l.email = f.email1 WHERE l.email = "' + email + '" AND l.cheese IN (SELECT cheese from likes l2 WHERE l2.email = f.email2)'
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    return result
+
+
 
 if __name__ == '__main__':
     my_db = mysql.connector.connect(

@@ -24,6 +24,7 @@ def update_recipes():
     except:
         return 'Did not update'
 
+
 # add a cheese to favorites
 @app.route('/toggle-like', methods=['POST'])
 def add_cheese_to_favorites():
@@ -42,7 +43,7 @@ def add_or_remove_friend():
     data = request.form
     if data.get('me', '') == '' or data.get('other_user', '') == '':
         return 'invalid params'
-    try: 
+    try:
         value = add_friend(cursor, db, data.get('me'), data.get('other_user'))
         return value
     except:
@@ -52,9 +53,15 @@ def add_or_remove_friend():
 def get_profile():
     email = request.args.get('email', '')
     try:
-        return json.dumps(get_user_profile(cursor, email))
+        return json.dumps(get_profile(cursor, email))
     except:
-        print('failed to load profile')
+        return 'failed to load profile'
+
+
+@app.route('/shared-preferences', methods['GET'])
+def shared():
+    email = request.args.get('email', '')
+    return json.dumps(shared_preferences(cursor, email))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)
