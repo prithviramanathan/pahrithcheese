@@ -1,4 +1,4 @@
-{"stores": [{"store_id":1,"store_name":"King Soopers","street":"6410 Vernon Terrace","city":"Indianapolis IN","address":"6410 Vernon Terrace, Indianapolis IN"},
+[{"store_id":1,"store_name":"King Soopers","street":"6410 Vernon Terrace","city":"Indianapolis IN","address":"6410 Vernon Terrace, Indianapolis IN"},
 {"store_id":2,"store_name":"Baker's Supermarkets","street":"18 Knutson Crossing","city":"Boston MA","address":"18 Knutson Crossing, Boston MA"},
 {"store_id":3,"store_name":"Safeway Inc.","street":"13812 Barby Way","city":"Indianapolis IN","address":"13812 Barby Way, Indianapolis IN"},
 {"store_id":4,"store_name":"Kroger","street":"7 Westerfield Drive","city":"New York NY","address":"7 Westerfield Drive, New York NY"},
@@ -498,4 +498,3 @@
 {"store_id":498,"store_name":"Market Street","street":"5465 Hagan Trail","city":"Milwaukee WI","address":"5465 Hagan Trail, Milwaukee WI"},
 {"store_id":499,"store_name":"Giant Food","street":"4 Logan Drive","city":"Seattle WA","address":"4 Logan Drive, Seattle WA"},
 {"store_id":500,"store_name":"King Soopers","street":"1 Riverside Avenue","city":"Indianapolis IN","address":"1 Riverside Avenue, Indianapolis IN"}]
-}
