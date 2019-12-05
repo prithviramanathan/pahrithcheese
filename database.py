@@ -78,11 +78,22 @@ def update_pairings(cursor, db, cheese, recipe):
     cursor.execute(sql_string)
     db.commit()
 
+# toggles the friendship status for a friend (email2)
 def add_friend(cursor, db, email1, email2):
-    sql = "INSERT INTO friends (email1, email2) VALUES (%s, %s)"
-    val = (email1, email2)
-    cursor.execute(sql, val)
-    db.commit()
+    sql = 'SELECT * FROM friends WHERE email1 = "' + email1 + '" AND email2 = "' + email2 + '"'
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    if len(result) == 0:
+        sql = 'INSERT INTO friends (email1, email2) values (%s, %s)'
+        val = (email1, cheese2)
+        cursor.execute(sql, val)
+        db.commit()
+        return 'added a friend'
+    else:
+        sql = 'DELETE FROM friends WHERE email1 = "' + email1 + '" AND email2 = "' + email2 + '"'
+        cursor.execute(sql)
+        db.commit()
+        return 'removed friend'
 
 
 def create_stored_procedure_likes(cursor, db):
@@ -131,6 +142,20 @@ def get_my_likes(cursor, email):
     result = cursor.fetchall()
     return result
 
+def get_my_friends(cursor, email):
+    sql = 'SELECT email2 FROM likes WHERE email2 = "' + email + '"'
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    return result
+
+def get_profile(cursor, email):
+    friends = get_my_friends(cursor, email)
+    cheeses =  get_my_likes(cursor, email)
+    for i in range(len(friends)):
+        friends[i] = friends[i][0]
+    for i in range(len(cheeses)):
+        cheeses[i] = cheeses[i][0]
+    return {'friends': friends, 'cheeses': cheeses, 'email': email}
 
 if __name__ == '__main__':
     my_db = mysql.connector.connect(

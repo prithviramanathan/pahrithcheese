@@ -41,11 +41,23 @@ def add_cheese_to_favorites():
     except:
         return 'failed to add cheese to favorite'
 
+# adds or removes a friend
+@app.route('/toggle-friend', methods=['POST'])
+def add_or_remove_friend():
+    data = request.form
+    if data.get('me', '') == '' or data.get('other_user', ''):
+        return 'invalid params'
+    try:
+        value = add_friend(cursor, db, data.get('me'), data.get('other_user'))
+        return value
+    except:
+        return 'failed to add friend'
+
 @app.route('/get-profile', methods=['GET'])
 def get_profile():
     email = request.args.get('email', '')
     try:
-        return get_my_likes(cursor, email)
+        return get_profile(cursor, email)
     except:
         return 'failed to load profile'
 
