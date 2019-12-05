@@ -12,6 +12,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class CheeseApiService {
+  private email: string;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -24,5 +25,13 @@ export class CheeseApiService {
     body = body.set('cheeseName', cheese);
     body = body.set('pairing', pair);
     return this.httpClient.post(`http://3.15.32.200/update-pairings`, body, httpOptions);
+  }
+
+  public setEmail(email: string) {
+    this.email = email;
+  }
+
+  public getEmail() {
+    return this.email;
   }
 }

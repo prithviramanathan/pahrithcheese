@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CheeseApiService } from '../services/cheese-api.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ToolbarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private route: ActivatedRoute, private router: Router, private cheeseService: CheeseApiService) { }
 
   ngOnInit() {
+  }
+
+  goToUser() {
+    this.router.navigate(['/user'], { queryParams: { email: this.cheeseService.getEmail() } });
   }
 
 }
